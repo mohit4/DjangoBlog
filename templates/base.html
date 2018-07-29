@@ -38,25 +38,30 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form> -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <button class="btn btn-outline-primary my-2 my-sm-0">
-                        Log In
-                    </button>
-                    <button class="btn btn-outline-primary my-2 my-sm-0">
-                        Join Us
-                    </button>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{user.username}}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'account:logout' %}">Sign Out</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary mx-2 my-sm-0" href="{% url 'account:login' %}" style="color: white">
+                            Log In
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link btn btn-primary mx-2 my-sm-0" href="{% url 'account:register' %}" style="color: white">
+                            Join Us
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
