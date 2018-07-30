@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 # django core
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
 # user defined
 from .models import Post
@@ -31,6 +31,26 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(PostCreateView, self).form_valid(form)
+
+#############################################
+
+class PostUpdateView(UpdateView):
+    '''
+    For updating an existing view
+    '''
+    fields = ('title','text')
+    model = Post
+    template_name = "blog/post_form.html"
+
+#############################################
+
+
+class PostDeleteView(DeleteView):
+    '''
+    For deleting an existing view
+    '''
+    model = Post
+    success_url = reverse_lazy('blog:list_posts')
 
 #############################################
 
