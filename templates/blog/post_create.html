@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load bootstrap %}
+
+{% block contents %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h3>Create new post</h3>
+                <form method="POST">
+                    {{ form|bootstrap }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary mx-2 my-2">
+                        Save
+                    </button>
+                    <a class="btn btn-danger" link="#">
+                        Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock contents %}
+    
