@@ -86,3 +86,16 @@ class PostDetailView(DetailView):
     '''
     model = Post
     template_name = "blog/post_detail.html"
+
+#############################################
+
+class PostUserListView(ListView):
+    '''
+    For listing all posts
+    '''
+    context_object_name = 'posts'
+    model = Post
+    template_name = 'blog/post_list.html'
+
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user)

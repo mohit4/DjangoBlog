@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^post_update/(?P<pk>[0-9]+)/$', views.PostUpdateView.as_view(), name='post_update'),
 
     url(r'^post_delete/(?P<pk>[0-9]+)/$', views.PostDeleteView.as_view(), name='post_delete'),
+
+    url(r'^user_posts/$', views.PostUserListView.as_view(), name='user_posts'),
 ]
