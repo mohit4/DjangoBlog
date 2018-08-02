@@ -2,12 +2,17 @@
 from __future__ import unicode_literals
 
 # django core
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 
 # user defined
 from .models import Post
+# from .decorators import user_required
 
 class IndexView(TemplateView):
     '''
@@ -19,7 +24,8 @@ class IndexView(TemplateView):
 # Model CRUD Views
 #############################################
 
-class PostCreateView(CreateView):
+# @method_decorator(login_required, name='dispatch')
+class PostCreateView(SuccessMessageMixin, CreateView):
     '''
     For creating new post
     '''
@@ -27,6 +33,7 @@ class PostCreateView(CreateView):
     model  = Post
     template_name = 'blog/post_create.html'
     success_url = reverse_lazy('blog:index')
+    success_message = 'New Post created successfully!'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -34,23 +41,32 @@ class PostCreateView(CreateView):
 
 #############################################
 
-class PostUpdateView(UpdateView):
+# @method_decorator(login_required, name='dispatch')
+# @method_decorator(user_required, name='dispatch')
+class PostUpdateView(SuccessMessageMixin, UpdateView):
     '''
     For updating an existing view
     '''
     fields = ('title','text')
     model = Post
     template_name = "blog/post_form.html"
+    success_message = 'Post updated successfully!'
 
 #############################################
 
-
-class PostDeleteView(DeleteView):
+# @method_decorator(login_required, name='dispatch')
+# @method_decorator(user_required, name='dispatch')
+class PostDeleteView(SuccessMessageMixin, DeleteView):
     '''
     For deleting an existing view
     '''
     model = Post
     success_url = reverse_lazy('blog:list_posts')
+    success_message = 'Post deleted!'
+
+    def delete(self, request, *args, **kwargs):
+        messages.error(self.request, self.success_message)
+        return super(PostDeleteView, self).delete(request, *args, **kwargs)
 
 #############################################
 

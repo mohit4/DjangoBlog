@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
@@ -21,6 +22,7 @@ def register(request):
                 User.objects.create_user(username, email, password)
                 user = authenticate(username=username, password=password)
                 login(request, user)
+                messages.success(request, "Welcome %s, Thanks for joining us!"%(username))
                 return redirect('blog:index')
     else:
         form = UserRegisterForm()
