@@ -9,11 +9,13 @@
                 <p class="card-body">{{ post.text }}</p>
                 <a href="{% url 'blog:list_posts' %}">Back to post listing</a>
             </div>
-            <a class="btn btn-primary mx-2" href="{% url 'blog:post_update' pk=post.pk  %}">Update</a>
-            
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-                Delete
-            </button>
+
+            {% if post.user == request.user %}
+                <a class="btn btn-primary mx-2" href="{% url 'blog:post_update' pk=post.pk  %}">Update</a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    Delete
+                </button>
+            {% endif %}
                 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
