@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 # django core
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
@@ -12,7 +12,7 @@ from django.views.generic import TemplateView, CreateView, ListView, DetailView,
 
 # user defined
 from .models import Post
-# from .decorators import user_required
+from .decorators import user_required, login_required
 
 class IndexView(TemplateView):
     '''
@@ -24,7 +24,7 @@ class IndexView(TemplateView):
 # Model CRUD Views
 #############################################
 
-# @method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class PostCreateView(SuccessMessageMixin, CreateView):
     '''
     For creating new post
@@ -41,8 +41,8 @@ class PostCreateView(SuccessMessageMixin, CreateView):
 
 #############################################
 
-# @method_decorator(login_required, name='dispatch')
-# @method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_required, name='dispatch')
 class PostUpdateView(SuccessMessageMixin, UpdateView):
     '''
     For updating an existing view
@@ -54,8 +54,8 @@ class PostUpdateView(SuccessMessageMixin, UpdateView):
 
 #############################################
 
-# @method_decorator(login_required, name='dispatch')
-# @method_decorator(user_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_required, name='dispatch')
 class PostDeleteView(SuccessMessageMixin, DeleteView):
     '''
     For deleting an existing view
